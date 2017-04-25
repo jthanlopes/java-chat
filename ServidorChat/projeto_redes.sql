@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 13-Abr-2017 às 18:35
+-- Generation Time: 25-Abr-2017 às 21:41
 -- Versão do servidor: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -28,7 +28,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `usuarios` (
   `id_usuario` int(11) NOT NULL,
-  `nome` varchar(200) NOT NULL,
+  `nome` varchar(20) NOT NULL,
+  `sobrenome` varchar(60) DEFAULT NULL,
   `email` varchar(200) NOT NULL,
   `senha` varchar(32) NOT NULL,
   `data_cadastro` date NOT NULL
@@ -38,8 +39,12 @@ CREATE TABLE `usuarios` (
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nome`, `email`, `senha`, `data_cadastro`) VALUES
-(1, 'Jonathan', 'jthan.lopes@gmail.com', '123', '2017-04-13');
+INSERT INTO `usuarios` (`id_usuario`, `nome`, `sobrenome`, `email`, `senha`, `data_cadastro`) VALUES
+(1, 'Jonathan', 'Lopes dos Santos', 'jthan.lopes@gmail.com', '202cb962ac59075b964b07152d234b70', '2017-04-24'),
+(10, 'Jonathan', 'Lopes', 'jthan.lopes@gmail.com', '123', '2017-04-24'),
+(11, 'Buzz', 'Lopes', 'buzz@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2017-04-24'),
+(12, 'Jonathan', 'Lopes', 'jthan.lopes@gmail.com', '123', '2017-04-24'),
+(13, 'Jonathan', 'Lopes', 'jthan.lopes@gmail.com', '123', '2017-04-24');
 
 --
 -- Indexes for dumped tables
@@ -51,6 +56,15 @@ INSERT INTO `usuarios` (`id_usuario`, `nome`, `email`, `senha`, `data_cadastro`)
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

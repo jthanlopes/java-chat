@@ -162,6 +162,12 @@ public class TelaLogin extends javax.swing.JFrame {
         } else {
             jlAlerta.setText("Preencha todos os campos.");
             jlAlerta.setVisible(true);
+            
+            if ("".equals(jtfEmail.getText())) {
+                jtfEmail.grabFocus();
+            } else {
+                jpfSenha.grabFocus();
+            }
         }
     }//GEN-LAST:event_jbLogarActionPerformed
 

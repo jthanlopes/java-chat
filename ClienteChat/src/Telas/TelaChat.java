@@ -13,18 +13,18 @@ import javax.swing.text.DefaultCaret;
  * @author jonsanto1
  */
 public class TelaChat extends javax.swing.JFrame {
-    
+
     ClienteDeChat cliente;
-    
+
     /**
      * Creates new form TelaChat
      */
     public TelaChat() {
         initComponents();
-        jtfMsg.grabFocus();        
+        jtfMsg.grabFocus();
         getRootPane().setDefaultButton(jbEnviarMsg);
         this.setLocationRelativeTo(null);
-        DefaultCaret caret = (DefaultCaret)jtaMsgs.getCaret();
+        DefaultCaret caret = (DefaultCaret) jtaMsgs.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
@@ -40,11 +40,11 @@ public class TelaChat extends javax.swing.JFrame {
             // da aplicação ServidorDeChat. Nada impede a mudança
             // desses valores, tentando estabelecer uma conexão com
             // outras portas em outras máquinas.
-            Socket conexao = new Socket("192.168.1.2", 2222);
+            Socket conexao = new Socket("10.70.130.146", 3333);
             this.cliente = new ClienteDeChat(conexao);
             // uma vez estabelecida a comunicação, deve-se obter os
             // objetos que permitem controlar o fluxo de comunicação
-            PrintStream saida = new PrintStream(conexao.getOutputStream());            
+            PrintStream saida = new PrintStream(conexao.getOutputStream());
             saida.println(TelaLogin.nomeUsuario);
             // Uma vez que tudo está pronto, antes de iniciar o loop
             // principal, executar a thread de recepção de mensagens.
@@ -54,17 +54,17 @@ public class TelaChat extends javax.swing.JFrame {
             // Caso ocorra alguma excessão de E/S, mostre qual foi.
             System.out.println("IOException: " + e);
         }
-    }   
+    }
 
     public void sendMsg(String msg) throws IOException {
-        PrintStream saida = new PrintStream(cliente.getConexao().getOutputStream());        
+        jtaMsgs.setText(jtaMsgs.getText() + "\nVocê disse > " + jtfMsg.getText());
+        jtfMsg.setText("");
+        PrintStream saida = new PrintStream(cliente.getConexao().getOutputStream());
         // antes de enviar, verifica se a conexão não foi fechada             
         if (cliente.getDone()) {
             System.exit(0);
-        }        
+        }
         saida.println(msg);
-        jtaMsgs.setText(jtaMsgs.getText() + "\nVocê disse > " + jtfMsg.getText());        
-        jtfMsg.setText("");
     }
 
     /**
@@ -91,7 +91,9 @@ public class TelaChat extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jtaMsgs.setEditable(false);
         jtaMsgs.setColumns(20);
+        jtaMsgs.setFont(new java.awt.Font("NSimSun", 0, 14)); // NOI18N
         jtaMsgs.setForeground(new java.awt.Color(51, 51, 51));
         jtaMsgs.setRows(5);
         jtaMsgs.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -189,15 +191,14 @@ public class TelaChat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbEnviarMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEnviarMsgActionPerformed
-        /*if (!"".equals(jtfMsg.getText())) {
-         jtaMsgs.setText(jtaMsgs.getText() + "\n" + TelaLogin.nomeUsuario + ": " + jtfMsg.getText());
-         jtfMsg.setText("");
-         }
-         */
-        try {
-            sendMsg(jtfMsg.getText());
-        } catch (IOException ex) {
-            Logger.getLogger(TelaChat.class.getName()).log(Level.SEVERE, null, ex);
+        if (!"".equals(jtfMsg.getText())) {
+            try {
+                sendMsg(jtfMsg.getText());
+            } catch (IOException ex) {
+                Logger.getLogger(TelaChat.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            jtfMsg.grabFocus();
         }
     }//GEN-LAST:event_jbEnviarMsgActionPerformed
 

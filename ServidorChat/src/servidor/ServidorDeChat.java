@@ -20,20 +20,21 @@ public class ServidorDeChat extends Thread {
     public static void main(String args[]) {
         
         try {
-            // criando um socket que fica escutando a porta 2222.
-            ServerSocket s = new ServerSocket(2222);
+            // criando um socket que fica escutando a porta 3333.
+            ServerSocket s = new ServerSocket(3333);
             // Loop principal.
             while (true) {
                 // aguarda algum cliente se conectar. A execução do
                 // servidor fica bloqueada na chamada do método accept da
                 // classe ServerSocket. Quando algum cliente se conectar
                 // ao servidor, o método desbloqueia e retorna com um
-                // objeto da classe Socket, que é porta da comunicação.
+                // objeto da classe Socket, que é a porta da comunicação.
                 System.out.print("Esperando alguem se conectar...");
                 Socket conexao = s.accept();
                 System.out.println(" Conectou!");                
                 // cria uma nova thread para tratar essa conexão
                 Thread t = new ServidorDeChat(conexao);
+                // Inicia a thread
                 t.start();
                 // voltando ao loop, esperando mais alguém se conectar.
             }
@@ -92,7 +93,7 @@ public class ServidorDeChat extends Thread {
                 // reenvia a linha para todos os clientes conectados
                 sendToAll(saida, " disse > ", linha);
                 // espera por uma nova linha.
-                linha = entrada.readLine();                
+                linha = entrada.readLine();             
             }
             // Uma vez que o cliente enviou linha em branco, retira-se
             // fluxo de saída da arrayList de clientes e fecha-se conexão.
@@ -120,7 +121,19 @@ public class ServidorDeChat extends Thread {
             PrintStream chat = (PrintStream) clientes.get(i);
 
             if (chat != saida) {
-                chat.println(meuNome + acao + linha);              
+                chat.println(meuNome + acao + linha);           
+            }
+
+        }
+    }
+    
+     public void sendToOne(PrintStream saida, String acao, String linha, String destinatario) throws IOException {
+        for (int i = 0; i < clientesNome.size(); i++) {
+            System.out.println(clientes.get(i));
+            PrintStream chat = (PrintStream) clientes.get(i);
+
+            if (chat != saida) {
+                chat.println(meuNome + acao + linha);  
             }
 
         }

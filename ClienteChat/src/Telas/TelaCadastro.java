@@ -172,7 +172,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                                 .addComponent(jtfNome, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jpfConfirmacaoSenha, javax.swing.GroupLayout.Alignment.LEADING)))))
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 105, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,10 +217,13 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     public void limpaCampos() {
         jtfNome.setText("");
+        jtfSobrenome.setText("");
         jtfEmail.setText("");
         jpfSenha.setText("");
         jpfConfirmacaoSenha.setText("");
         jtfNome.grabFocus();
+        jlAlerta.setVisible(false);
+        jlSucesso.setVisible(false);
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -250,6 +253,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             } else {
                 jpfSenha.setText("");
                 jpfConfirmacaoSenha.setText("");
+                jpfSenha.grabFocus();
                 jlAlerta.setText("Senhas são diferentes.");
                 jlSucesso.setVisible(false);
                 jlAlerta.setVisible(true);
