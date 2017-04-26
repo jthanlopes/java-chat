@@ -13,7 +13,7 @@ Se o usuário não tiver login, ele poderá fazer seu cadastro, todos os campos 
 <img src="http://image.prntscr.com/image/04ffd20b47e14b808b7f9aa753d38e04.png" alt="Tela de cadastro" /><br/>**Figura 02: Tela de cadastro** 
 
 O chat funciona com multithreading, vários usuários podem se conectar ao mesmo tempo e trocar mensagens.
-<img src="http://image.prntscr.com/image/fb039454e3114e53bc2bfb28ba7c9585.png" alt="Tela de cadastro" /><br/>**Figura 02: Tela do chat** 
+<img src="http://image.prntscr.com/image/fb039454e3114e53bc2bfb28ba7c9585.png" alt="Tela de cadastro" /><br/>**Figura 03: Tela do chat** 
 
 ### Para rodar o projeto
 1. Criar a base de dados projeto_redes, sql está disponível na pasta ServidorChat;
