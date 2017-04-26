@@ -10,7 +10,7 @@ import javax.swing.text.DefaultCaret;
 
 /**
  *
- * @author jonsanto1
+ * @author Jonathan Lopes
  */
 public class TelaChat extends javax.swing.JFrame {
 
@@ -28,7 +28,10 @@ public class TelaChat extends javax.swing.JFrame {
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
-    public void teste() {
+    /**
+     * Cria o socket de conexão com o servidor e inicia a thread que fica "escutando" por novas mensagens.
+     */
+    public void conecta() {
         this.setTitle("Chat Global - " + TelaLogin.nomeUsuario);
         jtaMsgs.setText(TelaLogin.nomeUsuario + " entrou no chat");
         try {
@@ -42,8 +45,8 @@ public class TelaChat extends javax.swing.JFrame {
             // outras portas em outras máquinas.
             Socket conexao = new Socket("10.70.130.146", 3333);
             this.cliente = new ClienteDeChat(conexao);
-            // uma vez estabelecida a comunicação, deve-se obter os
-            // objetos que permitem controlar o fluxo de comunicação
+            // Uma vez estabelecida a comunicação, deve-se obter os
+            // objetos que permitem controlar o fluxo de comunicação.
             PrintStream saida = new PrintStream(conexao.getOutputStream());
             saida.println(TelaLogin.nomeUsuario);
             // Uma vez que tudo está pronto, antes de iniciar o loop
@@ -56,11 +59,16 @@ public class TelaChat extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Envia uma mensagem para o servidor, que será enviada aos outros clientes.
+     * @param msg String com a mensagem digitada.
+     * @throws IOException 
+     */
     public void sendMsg(String msg) throws IOException {
         jtaMsgs.setText(jtaMsgs.getText() + "\nVocê disse > " + jtfMsg.getText());
         jtfMsg.setText("");
         PrintStream saida = new PrintStream(cliente.getConexao().getOutputStream());
-        // antes de enviar, verifica se a conexão não foi fechada             
+        // Antes de enviar, verifica se a conexão não foi fechada.
         if (cliente.getDone()) {
             System.exit(0);
         }

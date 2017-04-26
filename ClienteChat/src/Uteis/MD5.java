@@ -10,6 +10,11 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5 {
 
+    /**
+     * Recebe uma String e converte para MD5.
+     * @param senha String que será convertida.
+     * @return A String convertida para MD5.
+     */
     public String gerarMD5(String senha) {
 
         MessageDigest m;

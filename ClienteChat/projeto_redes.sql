@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 25-Abr-2017 às 21:41
+-- Generation Time: 26-Abr-2017 às 20:46
 -- Versão do servidor: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -41,10 +41,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `nome`, `sobrenome`, `email`, `senha`, `data_cadastro`) VALUES
 (1, 'Jonathan', 'Lopes dos Santos', 'jthan.lopes@gmail.com', '202cb962ac59075b964b07152d234b70', '2017-04-24'),
-(10, 'Jonathan', 'Lopes', 'jthan.lopes@gmail.com', '123', '2017-04-24'),
 (11, 'Buzz', 'Lopes', 'buzz@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', '2017-04-24'),
-(12, 'Jonathan', 'Lopes', 'jthan.lopes@gmail.com', '123', '2017-04-24'),
-(13, 'Jonathan', 'Lopes', 'jthan.lopes@gmail.com', '123', '2017-04-24');
+(15, 'teste', 'Teste', 'teste@gmail.com', '202CB962AC59075B964B07152D234B70', '2017-04-26');
 
 --
 -- Indexes for dumped tables
@@ -64,7 +62,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

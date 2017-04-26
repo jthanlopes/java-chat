@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author jonsanto1
+ * @author Jonathan Lopes
  */
 public class TelaCadastro extends javax.swing.JFrame {
 
@@ -31,6 +31,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         jtfNome.grabFocus();
         jlAlerta.setVisible(false);
         jlSucesso.setVisible(false);
+        getRootPane().setDefaultButton(jbSalvar);
     }
 
     /**
@@ -52,8 +53,8 @@ public class TelaCadastro extends javax.swing.JFrame {
         jtfEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jpfSenha = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbSalvar = new javax.swing.JButton();
+        jbLimpar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jpfConfirmacaoSenha = new javax.swing.JPasswordField();
         jlAlerta = new javax.swing.JLabel();
@@ -91,17 +92,17 @@ public class TelaCadastro extends javax.swing.JFrame {
 
         jLabel4.setText("Senha");
 
-        jButton1.setText("Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbSalvarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Limpar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jbLimpar.setText("Limpar");
+        jbLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jbLimparActionPerformed(evt);
             }
         });
 
@@ -153,9 +154,9 @@ public class TelaCadastro extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jlAlerta)
@@ -204,8 +205,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlAlerta)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jlSucesso)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,6 +216,9 @@ public class TelaCadastro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Limpa os campos e seta o "foco" no campo nome.
+     */
     public void limpaCampos() {
         jtfNome.setText("");
         jtfSobrenome.setText("");
@@ -223,14 +227,19 @@ public class TelaCadastro extends javax.swing.JFrame {
         jpfConfirmacaoSenha.setText("");
         jtfNome.grabFocus();
         jlAlerta.setVisible(false);
-        jlSucesso.setVisible(false);
+        jlSucesso.setVisible(false);        
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
         limpaCampos();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jbLimparActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    /**
+     * Envia os dados do novo usuário para serem salvos no banco.
+     * Valida campos em branco e senhas diferentes.
+     * @param evt 
+     */
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
         MD5 md5 = new MD5();
         String nome = jtfNome.getText();
         String sobrenome = jtfSobrenome.getText();
@@ -264,7 +273,7 @@ public class TelaCadastro extends javax.swing.JFrame {
             jlAlerta.setVisible(true);
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbSalvarActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         System.exit(0);
@@ -272,12 +281,10 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         TelaLogin login = new TelaLogin();
-        login.setVisible(true);
+        login.setVisible(true);        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -292,6 +299,8 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JButton jbLimpar;
+    private javax.swing.JButton jbSalvar;
     private javax.swing.JLabel jlAlerta;
     private javax.swing.JLabel jlSucesso;
     private javax.swing.JPasswordField jpfConfirmacaoSenha;

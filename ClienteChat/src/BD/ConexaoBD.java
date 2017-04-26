@@ -10,40 +10,43 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
-//Início da classe de conexão
+// Início da classe de conexão.
 public class ConexaoBD {
 
     private static String status = "Não conectou...";
-    //atributo do tipo Connection
+    // Atributo do tipo Connection.
     Connection connection = null;
 
-    //Método de Conexão//
+    /**
+     * Método de Conexão com o banco de dados.
+     * @return Uma váriável com a conexão. 
+     */
     public java.sql.Connection getConexaoMySQL() {
 
         try {
-            // Carregando o JDBC Driver padrão
+            // Carregando o JDBC Driver padrão.
             String driverName = "com.mysql.jdbc.Driver";
-            // Configurando a nossa conexão com um banco de dados
+            // Configurando a nossa conexão com um banco de dados.
             Class.forName(driverName);
 
-            //caminho do servidor do BD
+            // Caminho do servidor do BD.
             String serverName = "localhost";
 
-            //nome do seu banco de dados
+            // Nome do seu banco de dados.
             String mydatabase;
             mydatabase = "projeto_redes";
 
             String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
 
-            //nome de um usuário de seu BD
+            // Nome de um usuário do BD.
             String username = "root";
 
-            //sua senha de acesso
+            // Senha de acesso
             String password = "";
 
             connection = DriverManager.getConnection(url, username, password);
 
-            //Testa sua conexão//  
+            // Testa a conexão
             if (connection != null) {
                 status = ("STATUS--->Conectado com sucesso!");
             } else {
@@ -52,23 +55,29 @@ public class ConexaoBD {
 
             return connection;
 
-        } catch (ClassNotFoundException e) {  //Driver não encontrado
+        } catch (ClassNotFoundException e) {  // Driver não encontrado.
             System.out.println("O driver expecificado nao foi encontrado.");
             return null;
         } catch (SQLException e) {
-            //Não conseguindo se conectar ao banco
+            // Não conseguindo se conectar ao banco.
             System.out.println("Nao foi possivel conectar ao Banco de Dados.");
 
             return null;
         }
     }
 
-    //Método que retorna o status da sua conexão//
+    /**
+     * Método que retorna o status da conexão.
+     * @return Uma String: conectado com sucesso ou Erro na conexão.
+     */
     public String statusConection() {
         return status;
     }
 
-    //Método que fecha sua conexão//
+    /**
+     * Método que fecha a conexão.
+     * @return True se conseguir fechar a conexão, ou false se não conseguir fechar.
+     */
     public boolean FecharConexao() {
         try {
             getConexaoMySQL().close();
@@ -78,19 +87,22 @@ public class ConexaoBD {
         }
     }
 
-    //Método que reinicia sua conexão//
+    /**
+     * Método que reinicia a conexão.
+     * @return Para o método getConexaoMySQL().
+     */
     public java.sql.Connection ReiniciarConexao() {
         FecharConexao();
         return getConexaoMySQL();
-    }
+    }   
 
-    public void cadastro() throws SQLException {
-        String sql = "SELECT al_cod, al_nome, al_idade, al_curso FROM aluno "
-                + "where al_idade > '18' AND al_idade < '27'order by al_curso";
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-    }
-
+    /**
+     * Verifica se o email e senha do usuário estão no banco de dados.
+     * @param email Email do usuário.
+     * @param senha Senha do usuário.
+     * @return True se o usuário existir no banco, ou false caso não esteja no banco.
+     * @throws SQLException 
+     */
     public boolean login(String email, String senha) throws SQLException {
         getConexaoMySQL();
         String sql = "SELECT nome, email, senha FROM usuarios "
@@ -105,6 +117,15 @@ public class ConexaoBD {
         return false;
     }
 
+    /**
+     * Cadastra o usuário no banco de dados.
+     * @param nome Nome do usuário.
+     * @param sobrenome Sobrenome do usuário.
+     * @param email Email do usuário.
+     * @param senha Senha do usuário.
+     * @return True se o cadastro for efetuado com sucesso.
+     * @throws SQLException 
+     */
     public boolean cadastro(String nome, String sobrenome, String email, String senha) throws SQLException {
         Date data = new Date(System.currentTimeMillis());
         SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd");

@@ -130,15 +130,23 @@ public class TelaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Limpa os campos do login e "foca" no campo email.
+     */
     public void limpaCampos() {
         jtfEmail.setText("");
         jtfEmail.grabFocus();
         jpfSenha.setText("");
     }
+    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         cadastro.setVisible(true);        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    /**
+     * Testa usuário e senha com o banco, se retornar true abre a tela de chat.
+     * @param evt 
+     */
     private void jbLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLogarActionPerformed
         if (!"".equals(jtfEmail.getText()) && jpfSenha.getPassword().length != 0) {
             ConexaoBD conexao = new ConexaoBD();        
@@ -149,7 +157,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 if (conexao.login(jtfEmail.getText(), md5.gerarMD5(senha))) {                                  
                     this.setVisible(false);
                     cadastro.setVisible(false);
-                    chat.teste();
+                    chat.conecta();
                     chat.setVisible(true);
                 } else {
                     limpaCampos();
