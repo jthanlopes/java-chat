@@ -1,6 +1,5 @@
 package Cliente;
 
-import BD.ConexaoBD;
 import Telas.TelaLogin;
 
 /**
@@ -15,10 +14,6 @@ public class Principal {
      * @param args 
      */
     public static void main(String[] args) {
-        ConexaoBD conecta = new ConexaoBD();
-        conecta.getConexaoMySQL();               
-        System.out.println(conecta.statusConection());
-        
         TelaLogin login = new TelaLogin();        
         login.setVisible(true);
     }

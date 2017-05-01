@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Telas;
 
-import BD.ConexaoBD;
 import Uteis.MD5;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Jonathan Lopes
  */
-public class TelaCadastro extends javax.swing.JFrame {
-
-    ConexaoBD banco = new ConexaoBD();
+public class TelaCadastro extends javax.swing.JFrame {    
 
     /**
      * Creates new form TelaLogin
@@ -247,31 +236,31 @@ public class TelaCadastro extends javax.swing.JFrame {
         String senha = new String(jpfSenha.getPassword());
         String confirmaSenha = new String(jpfConfirmacaoSenha.getPassword());
 
-        if (!"".equals(nome) && !"".equals(sobrenome) && !"".equals(email) && !"".equals(senha) && !"".equals(confirmaSenha)) {
-            if (senha.equals(confirmaSenha)) {
-                try {
-
-                    if (banco.cadastro(nome, sobrenome, email, md5.gerarMD5(senha))) {
-                        limpaCampos();                                                
-                        jlAlerta.setVisible(false);
-                        jlSucesso.setVisible(true);                        
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                jpfSenha.setText("");
-                jpfConfirmacaoSenha.setText("");
-                jpfSenha.grabFocus();
-                jlAlerta.setText("Senhas são diferentes.");
-                jlSucesso.setVisible(false);
-                jlAlerta.setVisible(true);
-            }
-        } else {
-            jlAlerta.setText("Preencha todos os campos.");
-            jlSucesso.setVisible(false);
-            jlAlerta.setVisible(true);
-        }
+//        if (!"".equals(nome) && !"".equals(sobrenome) && !"".equals(email) && !"".equals(senha) && !"".equals(confirmaSenha)) {
+//            if (senha.equals(confirmaSenha)) {
+//                try {
+//
+//                    if (banco.cadastro(nome, sobrenome, email, md5.gerarMD5(senha))) {
+//                        limpaCampos();                                                
+//                        jlAlerta.setVisible(false);
+//                        jlSucesso.setVisible(true);                        
+//                    }
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            } else {
+//                jpfSenha.setText("");
+//                jpfConfirmacaoSenha.setText("");
+//                jpfSenha.grabFocus();
+//                jlAlerta.setText("Senhas são diferentes.");
+//                jlSucesso.setVisible(false);
+//                jlAlerta.setVisible(true);
+//            }
+//        } else {
+//            jlAlerta.setText("Preencha todos os campos.");
+//            jlSucesso.setVisible(false);
+//            jlAlerta.setVisible(true);
+//        }
 
     }//GEN-LAST:event_jbSalvarActionPerformed
 

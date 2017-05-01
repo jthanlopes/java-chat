@@ -43,7 +43,7 @@ public class TelaChat extends javax.swing.JFrame {
             // da aplicação ServidorDeChat. Nada impede a mudança
             // desses valores, tentando estabelecer uma conexão com
             // outras portas em outras máquinas.
-            Socket conexao = new Socket("10.70.130.146", 3333);
+            Socket conexao = new Socket("127.0.0.1", 3333);
             this.cliente = new ClienteDeChat(conexao);
             // Uma vez estabelecida a comunicação, deve-se obter os
             // objetos que permitem controlar o fluxo de comunicação.

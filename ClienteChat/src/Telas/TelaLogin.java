@@ -1,8 +1,11 @@
 package Telas;
 
 import Uteis.MD5;
-import BD.ConexaoBD;
-import java.sql.SQLException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -11,15 +14,16 @@ import javax.swing.JFrame;
  *
  * @author jonsanto1
  */
-public class TelaLogin extends javax.swing.JFrame {
+public final class TelaLogin extends javax.swing.JFrame {
+
+    private Socket conexao;
 
     /**
      * Creates new form TelaCadastro
      */
-    
     TelaCadastro cadastro = new TelaCadastro();
     public static String nomeUsuario;
-    
+
     public TelaLogin() {
         initComponents();
         this.setTitle("Tela de Login");
@@ -29,6 +33,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jlAlerta.setVisible(false);
         this.setResizable(false);
         getRootPane().setDefaultButton(jbLogar);
+        conectaBD();
     }
 
     /**
@@ -138,39 +143,58 @@ public class TelaLogin extends javax.swing.JFrame {
         jtfEmail.grabFocus();
         jpfSenha.setText("");
     }
-    
+
+    public void conectaBD() {
+        try {
+            // criando conexão com o
+            this.conexao = new Socket("127.0.0.1", 4444);
+        } catch (IOException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        cadastro.setVisible(true);        
+        cadastro.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    /**
-     * Testa usuário e senha com o banco, se retornar true abre a tela de chat.
-     * @param evt 
-     */
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     private void jbLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLogarActionPerformed
+        TelaChat chat = new TelaChat();
+        String linha;
+
         if (!"".equals(jtfEmail.getText()) && jpfSenha.getPassword().length != 0) {
-            ConexaoBD conexao = new ConexaoBD();        
-            TelaChat chat = new TelaChat();
-            MD5 md5 = new MD5();
-            String senha = new String(jpfSenha.getPassword());
+            PrintStream saida = null;
             try {
-                if (conexao.login(jtfEmail.getText(), md5.gerarMD5(senha))) {                                  
+                BufferedReader entrada = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
+                MD5 md5 = new MD5();
+                String senha = new String(jpfSenha.getPassword());
+                // objetos que permitem controlar o fluxo de comunicação.
+                saida = new PrintStream(conexao.getOutputStream());
+                saida.println("login");
+                saida.println(jtfEmail.getText());
+                saida.println(md5.gerarMD5(senha));
+                nomeUsuario = entrada.readLine();
+                if (!"null".equals(nomeUsuario)) {                    
                     this.setVisible(false);
                     cadastro.setVisible(false);
                     chat.conecta();
                     chat.setVisible(true);
+                    saida.close();
                 } else {
                     limpaCampos();
                     jlAlerta.setText("Usuário ou senha inválidos.");
                     jlAlerta.setVisible(true);
                 }
-            } catch (SQLException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             jlAlerta.setText("Preencha todos os campos.");
             jlAlerta.setVisible(true);
-            
+
             if ("".equals(jtfEmail.getText())) {
                 jtfEmail.grabFocus();
             } else {
@@ -178,10 +202,6 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jbLogarActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
