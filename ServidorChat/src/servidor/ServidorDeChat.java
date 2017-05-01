@@ -19,7 +19,7 @@ public class ServidorDeChat extends Thread {
     // Nome deste cliente
     private String meuNome;
         
-    public static void main(String args[]) {
+    public static void main(String args[]) {                        
         
         try {
             // criando um socket que fica escutando a porta 3333.
@@ -52,7 +52,7 @@ public class ServidorDeChat extends Thread {
      */
     public ServidorDeChat(Socket s) {
         conexao = s;
-    }
+    }       
 
     /**
      * O run() é chamado após executar o método .start() no main.
