@@ -1,6 +1,5 @@
 package servidor;
 
-import bd.ConexaoBD;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -79,17 +78,13 @@ public class ServidorBD extends Thread {
                 if ("login".equals(msgUsuario)) {
                     String email = entrada.readLine();
                     String senha = entrada.readLine();
-                    try {
-                        if (conectaBD.login(email, senha)) {
-                            saida.println(nome);                            
-                            System.out.println("Login efetuado com sucesso.");
-                            break;
-                        } else {
-                            saida.println("null");
-                            System.out.println("Não foi possível fazer o login.");
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ServidorBD.class.getName()).log(Level.SEVERE, null, ex);
+                    if (conectaBD.login(email, senha)) {
+                        saida.println(nome);
+                        System.out.println("Login efetuado com sucesso.");
+                        break;
+                    } else {
+                        saida.println("null");
+                        System.out.println("Não foi possível fazer o login.");
                     }
                 } else {
 
@@ -99,6 +94,8 @@ public class ServidorBD extends Thread {
         } catch (IOException e) {
             // Caso ocorra alguma excessão de E/S, mostre qual foi.
             System.out.println("IOException: " + e);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServidorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

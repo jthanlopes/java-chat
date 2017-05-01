@@ -146,7 +146,7 @@ public final class TelaLogin extends javax.swing.JFrame {
 
     public void conectaBD() {
         try {
-            // criando conexão com o
+            // criando conexão com o servidor
             this.conexao = new Socket("127.0.0.1", 4444);
         } catch (IOException ex) {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
