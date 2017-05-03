@@ -16,8 +16,8 @@ O chat funciona com multithreading, vários usuários podem se conectar ao mesmo
 <img src="http://image.prntscr.com/image/fb039454e3114e53bc2bfb28ba7c9585.png" alt="Tela de cadastro" /><br/>**Figura 03: Tela do chat** 
 
 ### Para rodar o projeto
-1. Criar a base de dados projeto_redes, sql está disponível na pasta ServidorChat;
-2. Configurar a porta que será utilizada pelo servidor;
-3. Configurar o IP e a porta utilizada pelo servidor nos computadores clientes;
-4. Executar o projeto servidor;
-5. Executar o projeto cliente.
+1. Criar a base de dados projeto_redes (MySQL) no PC do servidor, sql está disponível na pasta ServidorBD;
+2. O ServidorChat usa a porta 3333, e o ServidorBD usa a porta 4444, ambos utilizam o ip local: 127.0.0.1;
+3. Executar o projeto ServidorBD e ServidorChat;
+4. Executar o projeto cliente. 
+<br/>Obs.: Para alterar as "portas" utilizadas ou o IP, devesse alterar diretamente no código do projeto.
