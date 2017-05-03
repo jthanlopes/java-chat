@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import servidor.ServidorBD;
 
 // Início da classe de conexão.
 public class ConexaoBD {
@@ -145,6 +144,6 @@ public class ConexaoBD {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.execute();
             return true;
-        }
+        }                
     }
 }

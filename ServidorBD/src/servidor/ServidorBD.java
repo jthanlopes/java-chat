@@ -62,7 +62,7 @@ public class ServidorBD extends Thread {
 
     /**
      * O run() é chamado após executar o método .start() no main. O método run()
-     * é sobreescrito e fica "escutando" por novas mensagens do usuário.
+     * é sobreescrito e fica "escutando" por novas mensagens do usuário.     
      */
     @Override
     public void run() {
@@ -72,13 +72,18 @@ public class ServidorBD extends Thread {
             PrintStream saida = new PrintStream(conexao.getOutputStream());
 
             while (true) {
-                // Servidor fica esperando o tipo de requisição, login ou cadastro
+                // Servidor fica esperando uma msg do usuário 
+                // com o tipo de requisição, login ou cadastro.
                 String msgUsuario = entrada.readLine();
-                // Espera por uma nova linha.
+                // Testa se a requisição é pra login ou cadastro
                 if ("login".equals(msgUsuario)) {
+                    // Recebe o email e senha do usuário
                     String email = entrada.readLine();
                     String senha = entrada.readLine();
+                    // Chama o método de login, que irá retornar "true" se o 
+                    // usuário for encontrado no banco.
                     if (conectaBD.login(email, senha)) {
+                        // Retorna o nome do usuário logado para o cliente.
                         saida.println(nome);
                         System.out.println("Login efetuado com sucesso.");
                         break;
@@ -87,14 +92,37 @@ public class ServidorBD extends Thread {
                         System.out.println("Não foi possível fazer o login.");
                     }
                 } else {
-
+                    // Recebe nome, sobrenome, email e senha para cadastro
+                    String nomeUsuario = entrada.readLine();
+                    String sobrenome = entrada.readLine();
+                    String email = entrada.readLine();
+                    String senha = entrada.readLine();
+                    
+                    // Chama o método de cadastro e passa os dados do cliente.
+                    if (conectaBD.cadastro(nomeUsuario, sobrenome, email, senha)) {
+                        saida.println("true");
+                        System.out.println("Cadastro efetuado com sucesso.");
+                    } else {
+                        saida.println("false");
+                        System.out.println("Erro ao fazer o cadastro.");
+                    }
                 }
-            }
-            //conexao.close();
+            }            
         } catch (IOException e) {
             // Caso ocorra alguma excessão de E/S, mostre qual foi.
             System.out.println("IOException: " + e);
         } catch (SQLException ex) {
+            Logger.getLogger(ServidorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /*
+    * Fecha a conexão com o ServidorBD
+    */
+    public void fecharConexao() {
+        try {
+            conexao.close();
+        } catch (IOException ex) {
             Logger.getLogger(ServidorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

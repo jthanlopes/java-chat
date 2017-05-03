@@ -1,13 +1,22 @@
 package Telas;
 
+import static Telas.TelaLogin.conexao;
+import static Telas.TelaLogin.nomeUsuario;
 import Uteis.MD5;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Jonathan Lopes
  */
-public class TelaCadastro extends javax.swing.JFrame {    
+public class TelaCadastro extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaLogin
@@ -216,7 +225,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         jpfConfirmacaoSenha.setText("");
         jtfNome.grabFocus();
         jlAlerta.setVisible(false);
-        jlSucesso.setVisible(false);        
+        jlSucesso.setVisible(false);
     }
 
     private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
@@ -224,9 +233,10 @@ public class TelaCadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_jbLimparActionPerformed
 
     /**
-     * Envia os dados do novo usuário para serem salvos no banco.
-     * Valida campos em branco e senhas diferentes.
-     * @param evt 
+     * Envia os dados do novo usuário para serem salvos no banco. Valida campos
+     * em branco e senhas diferentes.
+     *
+     * @param evt
      */
     private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
         MD5 md5 = new MD5();
@@ -236,31 +246,46 @@ public class TelaCadastro extends javax.swing.JFrame {
         String senha = new String(jpfSenha.getPassword());
         String confirmaSenha = new String(jpfConfirmacaoSenha.getPassword());
 
-//        if (!"".equals(nome) && !"".equals(sobrenome) && !"".equals(email) && !"".equals(senha) && !"".equals(confirmaSenha)) {
-//            if (senha.equals(confirmaSenha)) {
-//                try {
-//
-//                    if (banco.cadastro(nome, sobrenome, email, md5.gerarMD5(senha))) {
-//                        limpaCampos();                                                
-//                        jlAlerta.setVisible(false);
-//                        jlSucesso.setVisible(true);                        
-//                    }
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            } else {
-//                jpfSenha.setText("");
-//                jpfConfirmacaoSenha.setText("");
-//                jpfSenha.grabFocus();
-//                jlAlerta.setText("Senhas são diferentes.");
-//                jlSucesso.setVisible(false);
-//                jlAlerta.setVisible(true);
-//            }
-//        } else {
-//            jlAlerta.setText("Preencha todos os campos.");
-//            jlSucesso.setVisible(false);
-//            jlAlerta.setVisible(true);
-//        }
+        if (!"".equals(nome) && !"".equals(sobrenome) && !"".equals(email) && !"".equals(senha) && !"".equals(confirmaSenha)) {
+            if (senha.equals(confirmaSenha)) {
+                PrintStream saida = null;
+                BufferedReader entrada = null;
+                try {
+                    // objetos que permitem controlar o fluxo de comunicação.
+                    entrada = new BufferedReader(new InputStreamReader(TelaLogin.conexao.getInputStream()));
+                    saida = new PrintStream(conexao.getOutputStream());
+                } catch (IOException ex) {
+                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                saida.println("cadastro");
+                saida.println(nome);
+                saida.println(sobrenome);
+                saida.println(email);
+                saida.println(md5.gerarMD5(senha));
+                try {
+                    String resp = entrada.readLine();
+
+                    if ("true".equals(resp)) {
+                        limpaCampos();
+                        jlAlerta.setVisible(false);
+                        jlSucesso.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(TelaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                jpfSenha.setText("");
+                jpfConfirmacaoSenha.setText("");
+                jpfSenha.grabFocus();
+                jlAlerta.setText("Senhas são diferentes.");
+                jlSucesso.setVisible(false);
+                jlAlerta.setVisible(true);
+            }
+        } else {
+            jlAlerta.setText("Preencha todos os campos.");
+            jlSucesso.setVisible(false);
+            jlAlerta.setVisible(true);
+        }
 
     }//GEN-LAST:event_jbSalvarActionPerformed
 
@@ -270,7 +295,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         TelaLogin login = new TelaLogin();
-        login.setVisible(true);        
+        login.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

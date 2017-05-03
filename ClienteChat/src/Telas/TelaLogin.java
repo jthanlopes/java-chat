@@ -16,7 +16,7 @@ import javax.swing.JFrame;
  */
 public final class TelaLogin extends javax.swing.JFrame {
 
-    private Socket conexao;
+    public static Socket conexao;
 
     /**
      * Creates new form TelaCadastro
@@ -147,7 +147,7 @@ public final class TelaLogin extends javax.swing.JFrame {
     public void conectaBD() {
         try {
             // criando conexão com o servidor
-            this.conexao = new Socket("127.0.0.1", 4444);
+            TelaLogin.conexao = new Socket("127.0.0.1", 4444);
         } catch (IOException ex) {
             Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -166,7 +166,7 @@ public final class TelaLogin extends javax.swing.JFrame {
         String linha;
 
         if (!"".equals(jtfEmail.getText()) && jpfSenha.getPassword().length != 0) {
-            PrintStream saida = null;
+            PrintStream saida;
             try {
                 BufferedReader entrada = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
                 MD5 md5 = new MD5();
